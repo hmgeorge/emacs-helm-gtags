@@ -301,6 +301,7 @@ Always update if value of this variable is nil."
   (and (eq system-type 'cygwin) helm-gtags-cygwin-use-global-w32-port))
 
 (defun helm-gtags--tag-directory ()
+  (or (file-name-directory (helm-gtags--find-tag-simple()))
   (with-temp-buffer
     (helm-aif (getenv "GTAGSROOT")
         it
@@ -312,7 +313,7 @@ Always update if value of this variable is nil."
           (file-name-as-directory
            (if (helm-gtags--convert-cygwin-windows-file-name-p)
                (cygwin-convert-file-name-from-windows tag-path)
-             tag-path)))))))
+             tag-path))))))))
 
 (defun helm-gtags--find-tag-directory ()
   (setq helm-gtags--real-tag-location nil)
